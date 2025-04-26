@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/Principal">
+
+    <activity
+        android:id="@+id/Main"
+        android:name="com.vigilancia.maestria.MainActivity"
+        android:label="@string/principal_fragment"
+        tools:layout="@layout/activity_main">
+
+    </activity>
+
+    <fragment
+        android:id="@+id/Principal"
+        android:name="com.vigilancia.maestria.Fragments.Principal"
+        android:label="@string/principal_fragment"
+        tools:layout="@layout/fragment_principal">
+
+        <action
+            android:id="@+id/action_p_to_escenarios"
+            app:destination="@id/Escenarios" />
+
+        <action
+            android:id="@+id/action_p_to_notificaciones"
+            app:destination="@id/Notificaciones" />
+
+        <action
+            android:id="@+id/action_p_to_login"
+            app:destination="@id/Login" />
+
+        <action
+            android:id="@+id/action_cerrar_sesion"
+            app:restoreState="false"
+            app:destination="@id/Login" />
+
+        <action
+            android:id="@+id/action_p_to_dispositivos"
+            app:restoreState="false"
+            app:destination="@id/Dispositivos" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/Escenarios"
+        android:name="com.vigilancia.maestria.Fragments.EscenariosFragment"
+        android:label="@string/escenarios_fragment"
+        tools:layout="@layout/fragment_escenarios_list">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/Notificaciones"
+        android:name="com.vigilancia.maestria.Fragments.NotificacionesFragment"
+        android:label="@string/notificaciones_fragment"
+        tools:layout="@layout/fragment_notificaciones_list">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/Login"
+        android:name="com.vigilancia.maestria.Fragments.LoginFragment"
+        android:label="@string/login_fragment"
+        tools:layout="@layout/fragment_login">
+
+        <action
+            android:id="@+id/action_login_to_p"
+            app:destination="@id/Principal" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/Dispositivos"
+        android:name="com.vigilancia.maestria.Fragments.DispositivosFragment"
+        android:label="@string/dispositivos_fragment"
+        tools:layout="@layout/fragment_dispositivos_list">
+
+    </fragment>
+
+</navigation>
