@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
             throw new RuntimeException(e);
         }
 
-        storage.saveSecureData("UrlBase", "http://192.168.1.23:8000");
         storage.saveSecureData("access_token", "[8N(n5eH7rjVEW6kzad]*,yd[f302CtTJYg{BF6nJRzZ}r:fiHfp=5FWUHH&2t/a*D-&QM$d]EM$1VP}.q-JE@RFB/npn#h0WS+B");
 
         com.vigilancia.maestria.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());

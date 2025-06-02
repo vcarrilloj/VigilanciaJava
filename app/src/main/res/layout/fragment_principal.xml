@@ -27,6 +27,14 @@
             android:text="@string/consultar_dispositivos"
             android:textSize="18sp" />
 
+        <Button
+            android:id="@+id/BtnModoOperacion"
+            android:layout_width="match_parent"
+            android:layout_height="79dp"
+            android:layout_margin="10dp"
+            android:text="@string/modo_operacion"
+            android:textSize="18sp" />
+
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

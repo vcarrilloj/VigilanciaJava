@@ -49,6 +49,7 @@ public class Principal extends Fragment {
         // Obtiene referencia al botón
         Button btnEjecutarEscenarios = view.findViewById(R.id.BtnEjecutarEscenarios);
         Button btnDsipositivos = view.findViewById(R.id.BtnDispositivos);
+        Button btnModoOperacion = view.findViewById(R.id.BtnModoOperacion);
         FloatingActionButton fab = view.findViewById(R.id.fab);
 
         // Configura el click listener del botón
@@ -61,6 +62,14 @@ public class Principal extends Fragment {
         });
 
         btnDsipositivos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavController navController = Navigation.findNavController(v);
+                navController.navigate(R.id.action_p_to_dispositivos);
+            }
+        });
+
+        btnModoOperacion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 NavController navController = Navigation.findNavController(v);
