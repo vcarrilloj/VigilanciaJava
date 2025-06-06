@@ -25,4 +25,6 @@
     <string name="consultar_dispositivos">Consultar Dispositivos</string>
     <string name="dispositivos_fragment">Dispositivos</string>
     <string name="modo_operacion">Modo Operación</string>
+    <string name="seleccionar_modo">Seleccionar</string>
+    <string name="modo_operacion_nav">Modo Operación</string>
 </resources>

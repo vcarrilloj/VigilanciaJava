@@ -73,7 +73,7 @@ public class Principal extends Fragment {
             @Override
             public void onClick(View v) {
                 NavController navController = Navigation.findNavController(v);
-                navController.navigate(R.id.action_p_to_dispositivos);
+                navController.navigate(R.id.action_p_to_modo);
             }
         });
 

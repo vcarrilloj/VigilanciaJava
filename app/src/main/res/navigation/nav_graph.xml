@@ -41,6 +41,11 @@
             app:restoreState="false"
             app:destination="@id/Dispositivos" />
 
+        <action
+            android:id="@+id/action_p_to_modo"
+            app:restoreState="false"
+            app:destination="@id/ModosOperacion" />
+
     </fragment>
 
     <fragment
@@ -76,6 +81,14 @@
         android:name="com.vigilancia.maestria.Fragments.DispositivosFragment"
         android:label="@string/dispositivos_fragment"
         tools:layout="@layout/fragment_dispositivos_list">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/ModosOperacion"
+        android:name="com.vigilancia.maestria.Fragments.ModoOperacionFragment"
+        android:label="@string/modo_operacion_nav"
+        tools:layout="@layout/fragment_modo_operacion_list">
 
     </fragment>
 

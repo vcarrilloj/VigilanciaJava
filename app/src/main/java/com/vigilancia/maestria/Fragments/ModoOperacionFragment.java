@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,60 +11,78 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.vigilancia.maestria.Adaptadores.ModosAdapter;
+import com.vigilancia.maestria.Comun.SecureStorageUtil;
+import com.vigilancia.maestria.Json.ModoOperacion;
 import com.vigilancia.maestria.R;
-import com.vigilancia.maestria.Fragments.placeholder.PlaceholderContent;
 
-/**
- * A fragment representing a list of Items.
- */
+import java.lang.reflect.Type;
+import java.util.List;
+
 public class ModoOperacionFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
-    private int mColumnCount = 1;
-
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
     public ModoOperacionFragment() {
-    }
-
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static ModoOperacionFragment newInstance(int columnCount) {
-        ModoOperacionFragment fragment = new ModoOperacionFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_modo_operacion_list, container, false);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+            SecureStorageUtil storage;
+            try {
+                storage = new SecureStorageUtil(context);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
-            recyclerView.setAdapter(new MyItemRecyclerViewAdapter(PlaceholderContent.ITEMS));
+            RecyclerView recyclerView = (RecyclerView) view;
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+
+            RequestQueue queue = Volley.newRequestQueue(context);
+            String url = storage.getSecureData("UrlBase") + "/Condiciones/Consultar/"; // URL de la API
+
+            // Manejar el error
+            JsonArrayRequest modosOpe = new JsonArrayRequest(Request.Method.GET, // Método de la solicitud
+                    url, null, // No se envía ningún cuerpo en la solicitud GET
+                    response -> {
+                        System.out.println("Respuesta: " + response);
+
+                        Gson gson = new Gson();
+
+                        // Especificar el tipo de la lista
+                        Type listType = new TypeToken<List<ModoOperacion>>() {
+                        }.getType();
+
+                        List<ModoOperacion> modosOperacion = gson.fromJson(response.toString(), listType);
+
+                        recyclerView.setAdapter(new ModosAdapter(modosOperacion, context));
+                    }, Throwable::printStackTrace
+            ) {
+                @Override
+                public java.util.Map<String, String> getHeaders() {
+                    java.util.Map<String, String> headers = new java.util.HashMap<>();
+                    headers.put("access_token", storage.getSecureData("access_token"));
+                    headers.put("Content-Type", "application/json");
+                    return headers;
+                }
+            };
+
+            // Agregar la solicitud a la cola
+            queue.add(modosOpe);
         }
         return view;
     }
